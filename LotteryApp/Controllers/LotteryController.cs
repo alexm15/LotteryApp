@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LotteryApp.Models;
+using LotteryClassLibrary;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +11,23 @@ namespace LotteryApp.Controllers
 {
     public class LotteryController : Controller
     {
+        private SerialNumberRegistry serialNumberRegistry;
+        private Participants participants = new Participants();
+        
+        public LotteryController()
+        {
+            serialNumberRegistry = new SerialNumberRegistry();
+
+        }
         // GET: Lottery
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult ViewParticipants()
+        {
+            
             return View();
         }
 
@@ -24,19 +40,21 @@ namespace LotteryApp.Controllers
         // GET: Lottery/EnterConstest
         public ActionResult EnterContest()
         {
-            return View();
+            var submission = new Submission();
+            submission.AvailableSerialNumbers = new SerialNumberRegistry();
+            return View(submission);
         }
 
-        // POST: Lottery/Create
+        // POST: Lottery/EnterContest
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult EnterContest(Submission submission)
         {
             try
             {
                 // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(EnterContest));
+                participants.Submissions.Add(submission);
+                return RedirectToAction(nameof());
             }
             catch
             {

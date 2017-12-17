@@ -13,5 +13,6 @@ namespace LotteryApp.Models
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public SerialNumberRegistry AvailableSerialNumbers { get; set; }
     }
 }
