@@ -12,11 +12,12 @@ namespace LotteryApp.Controllers
     public class LotteryController : Controller
     {
         private SerialNumberRegistry serialNumberRegistry;
-        private Participants participants = new Participants();
+        private Participants participants;
         
         public LotteryController()
         {
             serialNumberRegistry = new SerialNumberRegistry();
+            participants = new Participants();
 
         }
         // GET: Lottery
@@ -28,7 +29,7 @@ namespace LotteryApp.Controllers
         public ActionResult ViewParticipants()
         {
             
-            return View();
+            return View(participants);
         }
 
         // GET: Lottery/Details/5
@@ -45,22 +46,51 @@ namespace LotteryApp.Controllers
             return View(submission);
         }
 
-        // POST: Lottery/EnterContest
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EnterContest(Submission submission)
+        //POST: Lottery/EnterContest
+       [HttpPost]
+        public ActionResult EnterContest(string firstName, string lastName, string email, int phone, DateTime dateOfBirth, string serialNumber)
         {
             try
             {
-                // TODO: Add insert logic here
-                participants.Submissions.Add(submission);
-                return RedirectToAction(nameof());
+                if (ModelState.IsValid)
+                {
+                    var submission = new Submission();
+                    submission.FirstName = firstName;
+                    submission.SurName = lastName;
+                    submission.Email = email;
+                    submission.PhoneNumber = phone;
+                    submission.DateOfBirth = dateOfBirth;
+                    submission.SerialNumber = serialNumber;
+                    // TODO: Add insert logic here
+                    participants.Submissions.Add(submission);
+                    return RedirectToAction(nameof(ViewParticipants));
+                }
+                return View();
             }
             catch
             {
                 return View();
             }
         }
+
+        //[HttpPost]
+        //public ActionResult EnterContest(Submission submission)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            // TODO: Add insert logic here
+        //            participants.Submissions.Add(submission);
+        //            return RedirectToAction(nameof(ViewParticipants));
+        //        }
+        //        return View();
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         // GET: Lottery/Edit/5
         public ActionResult Edit(int id)
@@ -68,44 +98,6 @@ namespace LotteryApp.Controllers
             return View();
         }
 
-        // POST: Lottery/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(EnterContest));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Lottery/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Lottery/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(EnterContest));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

@@ -1,0 +1,33 @@
+﻿@model LotteryApp.Models.Participants
+
+@{
+    ViewData["Title"] = "ViewParticipants";
+}
+
+<h2>ViewParticipants</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Serial Number</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Date of Birth</th>
+        </tr>
+    </thead>
+    <tbody>     
+        <tr>
+            @foreach (var submission in @Model.Submissions)
+            {
+                <td>@submission.SerialNumber</td>
+                <td>@submission.FirstName</td>
+                <td>@submission.SurName</td>
+                <td>@submission.Email</td>
+                <td>@submission.PhoneNumber</td>
+                <td>@submission.DateOfBirth</td>
+            }
+        </tr>
+    </tbody>
+</table>
