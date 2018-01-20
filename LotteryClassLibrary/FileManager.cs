@@ -6,6 +6,22 @@ namespace LotteryClassLibrary
 {
     public class FileManager
     {
+        public void CreateParticipant(object participant)
+        {
+            try
+            {
+                using (TextWriter fileToWrite = new StreamWriter(new FileStream("Participants.dat", FileMode.Append)))
+                {
+                    fileToWrite.Write(participant);
+                }
+            }
+            catch (FileNotFoundException e)
+            {
+
+                throw e;
+            }
+        }
+
         public string ReadSerialNumber(String fileName)
         {
             try

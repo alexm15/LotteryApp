@@ -48,50 +48,30 @@ namespace LotteryApp.Controllers
         }
 
         //POST: Lottery/EnterContest
-       [HttpPost]
-        public ActionResult EnterContest(string firstName, string lastName, string email, int phone, DateTime dateOfBirth, string serialNumber)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateSubmission([FromForm]Submission submission)
         {
+
+
+            participants.Submissions.Add(submission);
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var submission = new Submission();
-                    submission.FirstName = firstName;
-                    submission.SurName = lastName;
-                    submission.Email = email;
-                    submission.PhoneNumber = phone;
-                    submission.DateOfBirth = dateOfBirth;
-                    submission.SerialNumber = serialNumber;
-                    // TODO: Add insert logic here
-                    participants.Submissions.Add(submission);
-                    return RedirectToAction(nameof(ViewParticipants));
+                    //submission.
+                    
+
+                    
                 }
-                return View();
             }
             catch
             {
                 return View();
             }
+            return View("ViewParticipants", participants);
         }
 
-        //[HttpPost]
-        //public ActionResult EnterContest(Submission submission)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            // TODO: Add insert logic here
-        //            participants.Submissions.Add(submission);
-        //            return RedirectToAction(nameof(ViewParticipants));
-        //        }
-        //        return View();
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
 
         // GET: Lottery/Edit/5
         public ActionResult Edit(int id)
