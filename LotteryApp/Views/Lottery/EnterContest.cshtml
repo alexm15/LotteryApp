@@ -10,8 +10,13 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EnterContest">
+        <form asp-action="CreateSubmission">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SerialNumber" class="control-label">Available Serial Numbers</label>
+                <select asp-for="SerialNumber" class="form-control" asp-items="Model.SerialNumberRegistry.AvailableSerialNumbers"></select>
+                <span asp-validation-for="SerialNumber" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -38,28 +43,16 @@
                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SerialNumber" class="control-label"></label>
-                <input asp-for="SerialNumber" class="form-control" placeholder="Choose from serial numbers to the right"/>
-                <span asp-validation-for="SerialNumber" class="text-danger"></span>
-
-
-            </div>
-            <div class="form-group">
-                <input type="submit" value="EnterContest" class="btn btn-default" />
+                <input type="submit" value="Enter Contest" class="btn btn-default" />
             </div>
         </form>
     </div>
-    <div class="col-md-4">
-        <ul>
-            @foreach (var serialNumber in Model.AvailableSerialNumbers.SerialNumbers)
-            {
-                <li>@serialNumber</li>
-            }
-        </ul>
-    </div>
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

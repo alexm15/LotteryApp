@@ -11,13 +11,15 @@ namespace LotteryApp.Controllers
 {
     public class LotteryController : Controller
     {
-        private SerialNumberRegistry serialNumberRegistry;
         private Participants participants;
+        private Submission newSubmission;
         
         public LotteryController()
         {
-            serialNumberRegistry = new SerialNumberRegistry();
+
             participants = new Participants();
+            newSubmission = new Submission();
+            newSubmission.SerialNumberRegistry = new SerialNumberRegistry();
 
         }
         // GET: Lottery
@@ -41,9 +43,8 @@ namespace LotteryApp.Controllers
         // GET: Lottery/EnterConstest
         public ActionResult EnterContest()
         {
-            var submission = new Submission();
-            submission.AvailableSerialNumbers = new SerialNumberRegistry();
-            return View(submission);
+
+            return View(newSubmission);
         }
 
         //POST: Lottery/EnterContest

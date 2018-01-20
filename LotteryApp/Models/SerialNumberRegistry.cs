@@ -1,4 +1,5 @@
 ﻿using LotteryClassLibrary;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,24 @@ namespace LotteryApp.Models
 {
     public class SerialNumberRegistry
     {
-        public IEnumerable<string> SerialNumbers { get; set; }
+        
+
         private FileManager fileManager;
+        public List<SelectListItem> AvailableSerialNumbers { get; } = new List<SelectListItem>();
+
 
         public SerialNumberRegistry() {
             fileManager = new FileManager();
-            SerialNumbers = fileManager.GetSerialNumbers("../LotteryClassLibrary/SerialNumbers.dat");
+            List<string> initialSerialNumbers = fileManager.GetSerialNumbers("../LotteryClassLibrary/SerialNumbers.dat");
+            SerialNumberToSelectListItems(initialSerialNumbers);
+        }
+
+        private void SerialNumberToSelectListItems(List<string> initialSerialNumbers)
+        {
+            foreach (var serialNumber in initialSerialNumbers)
+            {
+                AvailableSerialNumbers.Add(new SelectListItem { Value = serialNumber, Text = serialNumber });
+            }
         }
     }
 }
